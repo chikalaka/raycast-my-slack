@@ -1,0 +1,48 @@
+{
+  "$schema": "https://www.raycast.com/schemas/extension.json",
+  "name": "my-slack",
+  "title": "My Slack",
+  "description": "Manage your Slack IMs - view and send messages in one place",
+  "icon": "slack.png",
+  "author": "chikalaka",
+  "license": "MIT",
+  "commands": [
+    {
+      "name": "im",
+      "title": "IM",
+      "subtitle": "List Slack IMs",
+      "description": "View and send Slack direct messages",
+      "mode": "view"
+    }
+  ],
+  "preferences": [{
+    "title": "Slack API Token",
+    "description": "Slack API token",
+    "type": "password",
+    "defaultValue": "",
+    "name": "slackApiToken",
+    "required": true
+  }
+  ],
+  "dependencies": {
+    "@raycast/api": "^1.53.0",
+    "@raycast/utils": "^1.7.1",
+    "@slack/web-api": "^6.8.1",
+    "kickstart-utils": "^2.1.0"
+  },
+  "devDependencies": {
+    "@raycast/eslint-config": "1.0.5",
+    "@types/node": "18.8.3",
+    "@types/react": "18.0.9",
+    "eslint": "^7.32.0",
+    "prettier": "^2.5.1",
+    "typescript": "^4.4.3"
+  },
+  "scripts": {
+    "build": "ray build -e dist",
+    "dev": "ray develop",
+    "fix-lint": "ray lint --fix",
+    "lint": "ray lint",
+    "publish": "npx @raycast/api@latest publish"
+  }
+}
