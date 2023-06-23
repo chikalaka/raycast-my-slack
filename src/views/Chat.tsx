@@ -1,4 +1,4 @@
-import { Action, ActionPanel, Image, List, popToRoot } from "@raycast/api"
+import { Action, ActionPanel, Image, List } from "@raycast/api"
 import { useState } from "react"
 import { Message, Users } from "../types/types"
 import { formatChatMarkdown } from "../utils/utils"
@@ -37,7 +37,6 @@ export default function Chat({
                 if (typedMessage.trim() !== "") {
                   sendMessage(typedMessage)
                   setTypedMessage("")
-                  popToRoot()
                 }
               }}
             />

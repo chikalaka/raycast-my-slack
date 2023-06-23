@@ -1,7 +1,8 @@
 import { ImWithMessages, Message, User, Users } from "../types/types"
 import { slackClient } from "../api/api"
-import { Image, showToast } from "@raycast/api"
+import { Image, popToRoot, showToast, Toast } from "@raycast/api"
 import Mask = Image.Mask
+import Style = Toast.Style
 
 const formatMessage = (message?: Message, user?: User) => {
   if (!message) return ""
@@ -41,12 +42,13 @@ export const sendMessageToChannel = (channelId: string) => (text: string) => {
       channel: channelId,
       text,
     })
-    .catch((error) => {
+    .then(() => {
       showToast({
-        title: "Error sending message",
+        title: "Message sent!",
       })
+      popToRoot()
     })
-  showToast({ title: "Message sent!" })
+  showToast({ title: "Sending message", style: Style.Animated })
 }
 
 export const getUserIconAndTitle = (user?: User) => {
