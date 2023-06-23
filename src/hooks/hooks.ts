@@ -5,6 +5,8 @@ import { useEffect, useState } from "react"
 import { slackClient } from "../api/api"
 import { toDictionary } from "kickstart-utils"
 import { ConversationsHistoryResponse } from "@slack/web-api"
+import { showToast, Toast } from "@raycast/api"
+import Style = Toast.Style
 
 const isRelevantUser = (user: User) =>
   !user.is_bot && !user.deleted && !(user.id === "USLACKBOT")
@@ -107,13 +109,21 @@ export const useUsersAndIms = () => {
             limit: MESSAGE_PER_CHANNEL,
           })
         })
-      ).then((histories: ConversationsHistoryResponse[]) => {
-        const imsWithMessages = filteredIms.map((im, index) => {
-          return { ...im, messages: histories[index].messages || [] }
+      )
+        .then((histories: ConversationsHistoryResponse[]) => {
+          const imsWithMessages = filteredIms.map((im, index) => {
+            return { ...im, messages: histories[index].messages || [] }
+          })
+          showToast({ title: "History fetched", style: Style.Success })
+          setIms(imsWithMessages)
+          setIsLoading(false)
         })
-        setIms(imsWithMessages)
-        setIsLoading(false)
-      })
+        .catch((error) => {
+          console.log("error", error)
+          showToast({ title: "Error fetching history", style: Style.Failure })
+          setIsLoading(false)
+        })
+      showToast({ title: "Fetching history", style: Style.Animated })
     }
   }, [!!users, !!allIms])
 
