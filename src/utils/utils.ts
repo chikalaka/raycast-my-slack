@@ -62,7 +62,7 @@ export const getUserIconAndTitle = (user?: User) => {
 }
 
 const getLastMessageTs = (im: ImWithMessages) =>
-  Number(im.messages?.[0].ts || 0)
+  Number(im.messages?.[0]?.ts || 0)
 
 const sortImWithMessages = (a: ImWithMessages, b: ImWithMessages) =>
   getLastMessageTs(b) - getLastMessageTs(a)
