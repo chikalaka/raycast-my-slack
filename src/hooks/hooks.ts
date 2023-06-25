@@ -102,14 +102,14 @@ export const useUsersAndIms = () => {
     if (users && allIms) {
       const filteredIms = allIms.filter((im) => users[im.user])
 
-      Promise.all(
-        filteredIms.map((im) => {
-          return slackClient.conversations.history({
-            channel: im.id,
-            limit: MESSAGE_PER_CHANNEL,
-          })
+      const promises = filteredIms.map((im) => {
+        return slackClient.conversations.history({
+          channel: im.id,
+          limit: MESSAGE_PER_CHANNEL,
         })
-      )
+      })
+
+      Promise.all(promises)
         .then((histories: ConversationsHistoryResponse[]) => {
           const imsWithMessages = filteredIms.map((im, index) => {
             return { ...im, messages: histories[index].messages || [] }
