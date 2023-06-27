@@ -90,7 +90,7 @@ const useIms = () => {
   return { data: ims, isLoading }
 }
 
-const MESSAGE_PER_CHANNEL = 5
+const MESSAGE_PER_CHANNEL = 3
 
 export const useUsersAndIms = () => {
   const { data: users } = useUsers()

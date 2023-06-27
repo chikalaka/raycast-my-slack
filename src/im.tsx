@@ -16,39 +16,41 @@ export default function Command() {
 
   return (
     <List isLoading={isLoading} isShowingDetail>
-      {sortedIms?.map((im) => {
-        const userIconAndTitle = getUserIconAndTitle(users?.[im.user])
-        const reversedMessages = im.messages ? [...im.messages].reverse() : []
+      <List.Section title={"Chat with"}>
+        {sortedIms?.map((im) => {
+          const userIconAndTitle = getUserIconAndTitle(users?.[im.user])
+          const reversedMessages = im.messages ? [...im.messages].reverse() : []
 
-        return (
-          <List.Item
-            key={im.id}
-            {...userIconAndTitle}
-            actions={
-              <ActionPanel>
-                <Action
-                  title="Enter Chat"
-                  onAction={() =>
-                    push(
-                      <Chat
-                        sendMessage={sendMessageToChannel(im.id)}
-                        users={users || {}}
-                        messages={reversedMessages}
-                        userIconAndTitle={userIconAndTitle}
-                      />
-                    )
-                  }
+          return (
+            <List.Item
+              key={im.id}
+              {...userIconAndTitle}
+              actions={
+                <ActionPanel>
+                  <Action
+                    title="Enter Chat"
+                    onAction={() =>
+                      push(
+                        <Chat
+                          sendMessage={sendMessageToChannel(im.id)}
+                          users={users || {}}
+                          messages={reversedMessages}
+                          userIconAndTitle={userIconAndTitle}
+                        />
+                      )
+                    }
+                  />
+                </ActionPanel>
+              }
+              detail={
+                <List.Item.Detail
+                  markdown={formatChatMarkdown(reversedMessages, users || {})}
                 />
-              </ActionPanel>
-            }
-            detail={
-              <List.Item.Detail
-                markdown={formatChatMarkdown(reversedMessages, users || {})}
-              />
-            }
-          />
-        )
-      })}
+              }
+            />
+          )
+        })}
+      </List.Section>
     </List>
   )
 }
