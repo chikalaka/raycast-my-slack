@@ -1,6 +1,7 @@
 import { ImWithMessages, Message, User, Users } from "../types/types"
 import { slackClient } from "../api/api"
-import { Image, popToRoot, showToast, Toast } from "@raycast/api"
+import { Image, showToast, Toast } from "@raycast/api"
+import { closeMainWindow } from "@raycast/api"
 import Mask = Image.Mask
 import Style = Toast.Style
 
@@ -36,6 +37,8 @@ export const formatChatMarkdown = (
     .join("\n\n---\n\n")
 }
 
+const MESSAGE_SUCCESS = "Message sent!"
+
 export const sendMessageToChannel = (channelId: string) => (text: string) => {
   slackClient.chat
     .postMessage({
@@ -43,10 +46,11 @@ export const sendMessageToChannel = (channelId: string) => (text: string) => {
       text,
     })
     .then(() => {
-      showToast({
-        title: "Message sent!",
-      })
-      popToRoot()
+      closeMainWindow().then(() =>
+        showToast({
+          title: MESSAGE_SUCCESS,
+        })
+      )
     })
   showToast({ title: "Sending message", style: Style.Animated })
 }
