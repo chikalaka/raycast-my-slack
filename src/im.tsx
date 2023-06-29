@@ -4,9 +4,11 @@ import {
   formatChatMarkdown,
   getSortedImsByLastMessage,
   getUserIconAndTitle,
+  openChat,
   sendMessageToChannel,
 } from "./utils/utils"
 import { useUsersAndIms } from "./hooks/hooks"
+import { User } from "./types/types"
 
 export default function Command() {
   const { ims, users, isLoading } = useUsersAndIms()
@@ -18,7 +20,8 @@ export default function Command() {
     <List isLoading={isLoading} isShowingDetail>
       <List.Section title={"Chat with"}>
         {sortedIms?.map((im) => {
-          const userIconAndTitle = getUserIconAndTitle(users?.[im.user])
+          const imUser: User = users?.[im.user] || {}
+          const userIconAndTitle = getUserIconAndTitle(imUser)
           const reversedMessages = im.messages ? [...im.messages].reverse() : []
 
           return (
@@ -39,6 +42,13 @@ export default function Command() {
                         />
                       )
                     }
+                  />
+                  <Action
+                    title="Open in Slack"
+                    onAction={() => {
+                      if (imUser.team_id && imUser.id)
+                        openChat(imUser.team_id, imUser.id)
+                    }}
                   />
                 </ActionPanel>
               }
