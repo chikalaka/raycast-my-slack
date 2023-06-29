@@ -84,6 +84,14 @@ export const openChat = (workspaceId: string, userId: string) => {
   closeMainWindow()
 }
 
+export const openUnreadMessages = () => {
+  runAppleScript(
+    buildScriptEnsuringSlackIsRunning(`
+      tell application "System Events" to tell process "Slack" to keystroke "A" using {command down, shift down}
+    `)
+  )
+}
+
 export const buildScriptEnsuringSlackIsRunning = (
   commandsToRunAfterSlackIsRunning: string
 ): string => {

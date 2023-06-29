@@ -5,6 +5,7 @@ import {
   getSortedImsByLastMessage,
   getUserIconAndTitle,
   openChat,
+  openUnreadMessages,
   sendMessageToChannel,
 } from "./utils/utils"
 import { useUsersAndIms } from "./hooks/hooks"
@@ -32,6 +33,7 @@ export default function Command() {
                 <ActionPanel>
                   <Action
                     title="Enter Chat"
+                    icon={userIconAndTitle.icon}
                     onAction={() =>
                       push(
                         <Chat
@@ -44,12 +46,22 @@ export default function Command() {
                     }
                   />
                   <Action
+                    shortcut={{ modifiers: ["cmd"], key: "enter" }}
                     title="Open in Slack"
                     onAction={() => {
                       if (imUser.team_id && imUser.id)
                         openChat(imUser.team_id, imUser.id)
                     }}
+                    icon={userIconAndTitle.icon}
                   />
+                  <ActionPanel.Section>
+                    <Action
+                      title="Open Unread Messages in Slack"
+                      onAction={() => {
+                        openUnreadMessages()
+                      }}
+                    />
+                  </ActionPanel.Section>
                 </ActionPanel>
               }
               detail={
