@@ -40,19 +40,20 @@ export const formatChatMarkdown = (
 const MESSAGE_SUCCESS = "Message sent!"
 
 export const sendMessageToChannel = (channelId: string) => (text: string) => {
-  slackClient.chat
-    .postMessage({
-      channel: channelId,
-      text,
-    })
-    .then(() => {
-      closeMainWindow().then(() =>
-        showToast({
-          title: MESSAGE_SUCCESS,
-        })
-      )
-    })
-  showToast({ title: "Sending message", style: Style.Animated })
+  showToast({ title: "Sending message", style: Style.Animated }).then(() => {
+    slackClient.chat
+      .postMessage({
+        channel: channelId,
+        text,
+      })
+      .then(() => {
+        closeMainWindow().then(() =>
+          showToast({
+            title: MESSAGE_SUCCESS,
+          })
+        )
+      })
+  })
 }
 
 export const getUserIconAndTitle = (user: User) => {
