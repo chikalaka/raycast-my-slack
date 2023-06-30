@@ -92,6 +92,29 @@ export const openUnreadMessages = () => {
   )
 }
 
+export const openSearchConversation = () => {
+  openSlackAndPressCommandAndKey("k")
+}
+
+export const openGeneralSearch = () => {
+  openSlackAndPressCommandAndKey("g")
+}
+
+const openSlackAndPressCommandAndKey = (key: string) => {
+  runAppleScript(
+    buildScriptEnsuringSlackIsRunning(`
+      tell application "System Events"
+        tell process "Slack" 
+          repeat until (window 1 exists) 
+            delay 0.1 
+          end repeat 
+        end tell 
+        keystroke "${key}" using command down 
+      end tell
+    `)
+  )
+}
+
 export const buildScriptEnsuringSlackIsRunning = (
   commandsToRunAfterSlackIsRunning: string
 ): string => {

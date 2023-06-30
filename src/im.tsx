@@ -5,6 +5,8 @@ import {
   getSortedImsByLastMessage,
   getUserIconAndTitle,
   openChat,
+  openGeneralSearch,
+  openSearchConversation,
   openUnreadMessages,
   sendMessageToChannel,
 } from "./utils/utils"
@@ -56,7 +58,25 @@ export default function Command() {
                   />
                   <ActionPanel.Section>
                     <Action
-                      title="Open Unread Messages in Slack"
+                      icon={{ source: "slack.png" }}
+                      shortcut={{ modifiers: ["cmd"], key: "s" }}
+                      title="Search a Conversation"
+                      onAction={() => {
+                        openSearchConversation()
+                      }}
+                    />
+                    <Action
+                      icon={{ source: "slack.png" }}
+                      shortcut={{ modifiers: ["cmd"], key: "g" }}
+                      title="General Search"
+                      onAction={() => {
+                        openGeneralSearch()
+                      }}
+                    />
+                    <Action
+                      icon={{ source: "slack.png" }}
+                      shortcut={{ modifiers: ["cmd"], key: "u" }}
+                      title="Open All Unread Messages"
                       onAction={() => {
                         openUnreadMessages()
                       }}
