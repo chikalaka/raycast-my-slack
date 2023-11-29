@@ -8,6 +8,7 @@ type ChatProps = {
   messages: Message[]
   userIconAndTitle: { icon: { source: any; mask: Image.Mask }; title: any }
   sendMessage: (text: string) => void
+  openChatInSlackActionProps: React.ComponentProps<typeof Action>
 }
 
 export default function Chat({
@@ -15,6 +16,7 @@ export default function Chat({
   messages,
   userIconAndTitle,
   sendMessage,
+  openChatInSlackActionProps,
 }: ChatProps) {
   const [typedMessage, setTypedMessage] = useState<string>("")
   return (
@@ -40,6 +42,7 @@ export default function Chat({
                 }
               }}
             />
+            <Action {...openChatInSlackActionProps} />
           </ActionPanel>
         }
       />

@@ -27,6 +27,18 @@ export default function Command() {
           const userIconAndTitle = getUserIconAndTitle(imUser)
           const reversedMessages = im.messages ? [...im.messages].reverse() : []
 
+          const openChatInSlackActionProps: React.ComponentProps<
+            typeof Action
+          > = {
+            shortcut: { modifiers: ["cmd"], key: "enter" },
+            title: "Open in Slack",
+            onAction: () => {
+              if (imUser.team_id && imUser.id)
+                openChat(imUser.team_id, imUser.id)
+            },
+            icon: userIconAndTitle.icon,
+          }
+
           return (
             <List.Item
               key={im.id}
@@ -43,19 +55,14 @@ export default function Command() {
                           users={users || {}}
                           messages={reversedMessages}
                           userIconAndTitle={userIconAndTitle}
+                          openChatInSlackActionProps={
+                            openChatInSlackActionProps
+                          }
                         />
                       )
                     }
                   />
-                  <Action
-                    shortcut={{ modifiers: ["cmd"], key: "enter" }}
-                    title="Open in Slack"
-                    onAction={() => {
-                      if (imUser.team_id && imUser.id)
-                        openChat(imUser.team_id, imUser.id)
-                    }}
-                    icon={userIconAndTitle.icon}
-                  />
+                  <Action {...openChatInSlackActionProps} />
                   <ActionPanel.Section>
                     <Action
                       icon={{ source: "slack.png" }}
