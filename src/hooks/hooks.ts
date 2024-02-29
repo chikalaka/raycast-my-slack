@@ -76,10 +76,11 @@ const useIms = () => {
     }
     slackClient.conversations
       .list({
-        types: "im",
+        types: "im,mpim",
         exclude_archived: true,
       })
       .then(({ channels = [] }) => {
+        console.log("channels", channels)
         const imsWithUser = channels.filter(isRelevantIm) as Im[]
         setIms(imsWithUser)
         setIsLoading(false)
