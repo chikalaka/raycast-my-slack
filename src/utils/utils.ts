@@ -59,6 +59,14 @@ export const sendMessageToChannel =
           })
         )
       })
+      .catch((error) => {
+        const needed = error?.data?.needed
+        toast.style = Style.Failure
+        toast.title = "Failed to send message"
+        toast.message = needed
+          ? `Missing Slack scope: ${needed}`
+          : error?.data?.error || error?.message || "Unknown error"
+      })
   }
 
 export const getUserIconAndTitle = (user: User) => {
