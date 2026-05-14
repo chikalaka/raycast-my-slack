@@ -15,6 +15,9 @@
     oauth_config:
       scopes:
         user:
+          # Command: IM - send messages
+          - chat:write
+
           # Command: Search & Unread Messages & Set Presence
           - users:read
 
